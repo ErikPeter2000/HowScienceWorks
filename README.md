@@ -8,4 +8,4 @@ This is my homework for the How Science Works practical as part of the OCR A-lev
 
 - `LaTeX/`: Contains the LaTeX source code for the report.
 - `PythonCode/`: Contains the Python Jupyter notebook used to process the data, and some old algorithms I wrote to solve the problems.
-- `RustCode/`: Contains the Rust source code for the DPLL and WalkSAT algorithms used to solve the problems.
+- `RustCode/`: Contains the Rust source code for the DPLL and WalkSAT algorithms used to solve the problems. The csv data used is [RustCode/results_more.csv](RustCode/results_more.csv).

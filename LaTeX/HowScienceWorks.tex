@@ -1,6 +1,6 @@
 \documentclass{article}
 \usepackage{booktabs}
-\usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm,marginparwidth=1.75cm]{geometry}
+\usepackage[a4paper,top=2cm,bottom=2cm,left=2cm,right=2cm,marginparwidth=1.75cm]{geometry}
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{amsmath}
@@ -12,12 +12,11 @@
 \usepackage{csvsimple}
 \usepackage{enumitem}
 \usepackage[skip=10pt]{parskip}
-\usepackage{tabularx}
 \usepackage{svg}
 \usepackage{caption}
-\usepackage{tikz}
 \usepackage{float}
 \usepackage{siunitx}
+\renewcommand{\familydefault}{\sfdefault}
 \addbibresource{bibliography.bib}
 
 % Table padding
@@ -45,7 +44,7 @@
     \section{Propositional Logic and SAT Problems}
 
     \subsection{Propositional Logic}
-    Propositional logic is the study of logical relationships between propositions.\supercite{sep-logic-propositional} The basic elements of propositional logic are \textbf{propositional symbols} which are boolean variables that can be either true or false (e.g. $A, x, IsSuccess, IsFlying$). A \textbf{literal} is a propositional symbol or its negation ($x, \neg x $). \textbf{Complex sentences} can be formed by applying the following logical operators to simpler sentences:  
+    Propositional logic is the study of logical relationships between propositions.\supercite{sep-logic-propositional} The basic elements of propositional logic are \textbf{propositional symbols} which are boolean variables that can be either true or false (e.g. \(x, IsSuccess, IsFlying\)). A \textbf{literal} is a propositional symbol or its negation (\(x, \neg x \)). \textbf{Complex sentences} can be formed by applying the following logical operators to simpler sentences:  
 
     \begin{itemize}
         \item \textbf{Negation} ($\neg$) True becomes false and false becomes true.
@@ -64,7 +63,7 @@
 
     \subsection{SAT Problems}
 
-    An \textbf{SAT problem} involves determining whether there exists an assignment to variables in the expression that makes the whole expression true.\supercite{sat-np-complete-cook} In the example above, $\left\{x_3 = \text{True}\right\}$ is a solution to the problem. SAT problems were the first problems to be shown as NP-complete, meaning that in their worst-case scenario, no known algorithm can solve all instances in polynomial time.\supercite{britannica-np-complete}
+    A boolean satisfaction problem or \textbf{SAT problem} involves determining whether there exists an assignment to variables in a boolean expression that makes the whole expression true.\supercite{sat-np-complete-cook} In the example above, $\left\{x_3 = \text{True}\right\}$ is a solution to the problem. SAT problems were the first problems to be shown as NP-complete, meaning that in their worst-case scenario, no known algorithm can solve all instances in polynomial time.\supercite{britannica-np-complete}
 
     \subsection{SAT Solvers}
     Different algorithms have been developed to solve SAT problems, and in this document I will look at two of them: \textbf{DPLL} and \textbf{WalkSAT}. DPLL (Davis-Putnam-Logemann-Loveland) is a backtracking algorithm that recursively searches for a solution to an SAT problem. It is complete, meaning it will either find a solution if one exists or prove that the problem is unsatisfiable. WalkSAT is a local search algorithm that iteratively searches for a solution to an SAT problem using random-walk, and is incomplete but should be faster. Both algorithms are widely used and have been shown to be effective in solving SAT problems.\supercite{dpll-algorithm}\supercite{selman1994noise}
@@ -123,17 +122,17 @@
         \item The most difficult SAT problems seem to be around 5.6 when consisting of a few symbols ($\le 10$), but this decreases at a decreasing rate for those with more symbols.
         \item Both DPLL and WalkSAT show similar trends, but WalkSAT is far slower, which is a contradiction to what is expected.\supercite{selman1994noise} This is likely because of my poor, inefficient implementation.
         \item As the number of symbols increases, the time taken to solve the SAT problem increases for both DPLL and WalkSAT. This is expected, as more symbols will require more computation.
-        \item Both graphs show a clear maximum difficulty for SAT problems with less than 30 symbols, which is expected. This difficulty is also dependent on the number of symbols in the problem.
+        \item Both graphs show a clear maximum difficulty for SAT problems with fewer than 30 symbols. The observed difficulty also depends on the number of symbols present in the problem.
         \item The data collected was very noisy and inaccurate.
     \end{itemize}
 
     \subsubsection{Conclusion}
     
-    The difficulty of SAT problems depends on not only the clause/symbol ratio but also the number of symbols in the problem. Therefore it is not possible to say which problems are the most difficult. However, it is still clear that SAT problems seem to have a region of maximum difficulty, which occurs between 1 and 6 clauses per symbol.
+    The difficulty of SAT problems depends on not only the clause/symbol ratio but also the number of symbols in the problem. Consequently, it is not possible to say which problems are the most difficult. However, it is still clear that SAT problems seem to have a region of maximum difficulty, which occurs between 1 and 6 clauses per symbol.
 
-    Other sources state that 3-CNF (3 symbol) have a most difficult clause/symbol ratio of 4.3.\supercite{Norvig_2021} This is close to my value of 5.6, although since the difficult ratio seems to increase as the number of symbols decrease, my data is not supportive of this claim and suggests that the most difficult ratio lies above 5.6
+    Other sources state that 3-CNF (3 symbol) have a most difficult clause/symbol ratio of 4.3.\supercite{Norvig_2021} This is close to my value of 5.6. However, my data indicates that this ratio increases as the number of symbols decreases, which implies that the most difficult ratio lies above 5.6.
 
-    The source of this error is likely due to the inaccuracy of timing. I measured these times on my personal computer, whose processor is busy with other tasks and may decide to unexpectedly de-prioritise running my algorithms, leading to latency. This could have caused the variations in these times. A solution would be to instead of timing the algorithms, to count the number of steps taken to solve the problem, as this would be more accurate.
+    The source of this error is likely due to the inaccuracy of timing. I measured these times on my personal computer, whose processor is busy with other tasks and may decide to unexpectedly de-prioritise running my algorithms, leading to latency. This could have caused the variations in these times. A potential solution would be to count the number of steps taken to solve the problem instead of timing, as this would be more consistent and accurate.
 
     \subsubsection{Notes}
 
@@ -141,7 +140,7 @@
         \item I switched from Python to Rust\supercite{rust-lang} for the implementation of the algorithms, as Rust is faster and more efficient and Python was taking too long. Both implementations are available in my GitHub repository.
         \item Python was used to produce the graphs, LaTeX for the write-up.
         \item A risk assessment was conducted before the experiment, and no risks were identified. Safe computer practices were followed.
-        \item Github Repo: \url{https://github.com/ErikPeter2000/HowScienceWorks}
+        \item GitHub repository: \url{https://github.com/ErikPeter2000/HowScienceWorks}
     \end{itemize}
 
     \section{References}

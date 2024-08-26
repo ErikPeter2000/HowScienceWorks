@@ -1,0 +1,11 @@
+Symbols,Clauses,Time / µs,Algorithm, Clause / Symbol Ratio
+2,2,14.1,dpll,1.0
+2,2,1.9,walksat,1.0
+2,2,1.8,dpll,1.0
+2,2,0.5,walksat,1.0
+2,2,0.5,dpll,1.0
+2,2,1.2,walksat,1.0
+2,2,0.5,dpll,1.0
+2,2,2.0,walksat,1.0
+2,2,0.3,dpll,1.0
+2,2,1.7,walksat,1.0

@@ -2,7 +2,9 @@
 
 This is my homework for the How Science Works practical as part of the OCR A-level Physics course. Here, I investigate which boolean satisfaction problems are the hardest to solve. The intended audience is my physics teacher.
 
-[Here is the report](LaTeX/HowScienceWorks.pdf).
+After further investigation, I found that my results were completely wrong due to a bug. At the time of writing, I haven't amended the report, as I don't think that it's worth the time and the correction would probably go over the 3-page limit (which is already exceeded with references).
+
+[Here is the report](LaTeX/HowScienceWorks.pdf). 
 
 ## Project Structure
 

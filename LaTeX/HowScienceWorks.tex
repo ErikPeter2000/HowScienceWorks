@@ -40,6 +40,10 @@
 
 \begin{document}
     \maketitle
+    
+    \section{Introduction}
+
+    In this document, I will investigate the relationship between the clause/symbol ratio of boolean satisfaction problems and the time it takes to solve them using DPLL and WalkSAT algorithms.
 
     \section{Propositional Logic and SAT Problems}
 
@@ -52,7 +56,7 @@
         \item \textbf{Disjunction} ($\lor$) At least one sentence must be true for the disjunction to be true.
     \end{itemize}
 
-    The implication ($\Rightarrow$) and biconditional ($\Leftrightarrow$) also exist but are not necessary for this discussion. A \textbf{clause} is a disjunction of literals, and an expression in \textbf{CNF} (Conjunctive Normal Form) is a conjunction of clauses. Any boolean expression can be converted to CNF by applying the laws of boolean algebra\supercite{Norvig_2021}(not mentioned here). CNF is a useful form for SAT problems, as it provides a structure to check if a CNF expression is satisfiable, since all clauses must be true for the expression to be true.
+    The implication ($\Rightarrow$) and biconditional ($\Leftrightarrow$) also exist but are not necessary for this discussion. A \textbf{clause} is a disjunction of literals, and an expression in \textbf{CNF} (Conjunctive Normal Form) is a conjunction of clauses. Any boolean expression can be converted to CNF by applying the laws of boolean algebra\supercite{Norvig_2021}(not mentioned here). CNF is a useful form for SAT problems, as it provides a structure to check if the problem is satisfiable, since all clauses must be true for the expression to be true.
 
     Here is an expression in CNF, consisting of three clauses and three symbols. This is called a 3-CNF expression, since each clause has three literals.
     \begin{equation*}
@@ -68,27 +72,27 @@
     \subsection{SAT Solvers}
     Different algorithms have been developed to solve SAT problems, and in this document I will look at two of them: \textbf{DPLL} and \textbf{WalkSAT}. DPLL (Davis-Putnam-Logemann-Loveland) is a backtracking algorithm that recursively searches for a solution to an SAT problem. It is complete, meaning it will either find a solution if one exists or prove that the problem is unsatisfiable. WalkSAT is a local search algorithm that iteratively searches for a solution to an SAT problem using random-walk, and is incomplete but should be faster. Both algorithms are widely used and have been shown to be effective in solving SAT problems.\supercite{dpll-algorithm}\supercite{selman1994noise}
 
-    The implementation of these algorithms is not discussed here but will be available in my GitHub repository. Both algorithms are designed to terminate when it is clear that the SAT problem is either satisfable or unsatisfiable. WalkSAT will also terminate after a pre-set finite number of attempts, which is necessary, as it is incomplete. SAT problems with few clauses to symbols are known to be weakly-constraint and have many solutions, while SAT problems with many clauses to symbols are strongly-constraint and will contain contradictions that make them unsatisfiable.\supercite{Norvig_2021} In these cases, the SAT problem can be solved quickly. I am interested in the problems that lie in between these two extremes, and how the clause/symbol ratio affects the time it takes to solve SAT problems.
+    The implementation of these algorithms is not discussed here but will be available in my GitHub repository. Both algorithms are designed to terminate when it is clear that the SAT problem is either satisfable or unsatisfiable. WalkSAT will also terminate after a pre-set finite number of attempts, which is necessary, as it is incomplete. SAT problems with few clauses to symbols are known to be weakly-constraint and have many solutions, while SAT problems with many clauses to symbols are strongly-constraint and will contain contradictions that make them unsatisfiable.\supercite{Norvig_2021} In these two cases, the SAT problem can be solved quickly. I am interested in the problems that lie in between these extremes, and how the clause/symbol ratio affects the time it takes to solve SAT problems.
 
     \section{Methodology}
 
     \subsection{Aim}
-    To identify the relationship between the clause/symbol ratio of SAT problems and the time it takes to solve them. Then, to identify which SAT problems require the most time to solve.
+    To identify the relationship between the clause/symbol ratio of SAT problems and the time it takes to solve them. Then, to identify the clause/symbol ratio of the time-consuming SAT problems.
 
     \subsection{Equipment}
     \begin{itemize}
         \item A computer with Python 3.8\supercite{python-lang} or later installed and internet access.
         \item Python implementations of the DPLL and WalkSAT algorithms.
-        \item The necessary libraries to run the algorithms, such as Numpy and Pandas, available through Pip.
+        \item The necessary libraries to run the algorithms, available through the Python package manager: PIP.
     \end{itemize}
 
     \subsection{Procedure}
     \begin{enumerate}
         \item Generate a random CNF expression with $m$ clauses and $n$ symbols. Calculate and record the clause/symbol ratio.
         \item Time how long it takes to solve the SAT problem using both the DPLL and WalkSAT algorithms. Timing is done by recording the timestamps before and after executing the algorithms using the \texttt{time} library. The difference between these timestamps is the time taken to solve the problem.
-        \item Repeat steps 1 and 2 for 1000 times, and take a mean time for these clause and symbol values.
-        \item Repeat step 3, varying $n$ from 2 to 50 in steps of 1.
-        \item Repeat step 4, varying $m$ from 2 to 50 in steps of 1.
+        \item Repeat steps one and two 1000 times, and take a mean time for these clause and symbol values.
+        \item Repeat step three, varying $n$ from 2 to 50 in steps of 1.
+        \item Repeat step four, varying $m$ from 2 to 50 in steps of 1.
         \item Plot a graph of the clause/symbol ratio against the time taken to solve the problem. Identify any trends such as maxima.
     \end{enumerate}
 
@@ -122,24 +126,24 @@
         \item The most difficult SAT problems seem to be around 5.6 when consisting of a few symbols ($\le 10$), but this decreases at a decreasing rate for those with more symbols.
         \item Both DPLL and WalkSAT show similar trends, but WalkSAT is far slower, which is a contradiction to what is expected.\supercite{selman1994noise} This is likely because of my poor, inefficient implementation.
         \item As the number of symbols increases, the time taken to solve the SAT problem increases for both DPLL and WalkSAT. This is expected, as more symbols will require more computation.
-        \item Both graphs show a clear maximum difficulty for SAT problems with fewer than 30 symbols. The observed difficulty also depends on the number of symbols present in the problem.
+        \item Both graphs show a clear maximum difficulty for SAT problems with fewer than 30 symbols. The observed difficulty also depends on the number of symbols present in the problem. There was not sufficient data for problems with more than 30 symbols.
         \item The data collected was very noisy and inaccurate.
     \end{itemize}
 
     \subsubsection{Conclusion}
     
-    The difficulty of SAT problems depends on not only the clause/symbol ratio but also the number of symbols in the problem. Consequently, it is not possible to say which problems are the most difficult. However, it is still clear that SAT problems seem to have a region of maximum difficulty, which occurs between 1 and 6 clauses per symbol.
+    The difficulty of SAT problems depends not only on the clause/symbol ratio but also the number of symbols in the problem. Consequently, it is not possible to say which problems are the most difficult. However, it is still clear that SAT problems seem to have a region of maximum difficulty, which occurs between 1 and 6 clauses per symbol.
 
-    Other sources state that 3-CNF (3 symbol) have a most difficult clause/symbol ratio of 4.3.\supercite{Norvig_2021} This is close to my value of 5.6. However, my data indicates that this ratio increases as the number of symbols decreases, which implies that the most difficult ratio lies above 5.6.
+    Other sources state that 3-CNF (3 symbol) have a most difficult clause/symbol ratio of 4.3.\supercite{Norvig_2021} This is close to my value of 5.6 for problems with less thatn 10 symbols. However, my data indicates that this ratio increases as the number of symbols decreases, which implies that the most difficult ratio for 3-CNFs lies above 5.6.
 
-    The source of this error is likely due to the inaccuracy of timing. I measured these times on my personal computer, whose processor is busy with other tasks and may decide to unexpectedly de-prioritise running my algorithms, leading to latency. This could have caused the variations in these times. A potential solution would be to count the number of steps taken to solve the problem instead of timing, as this would be more consistent and accurate.
+    The source of this error is likely due to the inaccuracy of timing. I measured these times on my personal computer, whose processor is busy with other tasks and may decide to unexpectedly de-prioritise running my algorithms, leading to latency. This could have caused the variations in these times. A potential solution would be to count the number of steps taken to solve the problem instead of measuring the time, as this measure would be more consistent and accurate.
 
     \subsubsection{Notes}
 
     \begin{itemize}
         \item I switched from Python to Rust\supercite{rust-lang} for the implementation of the algorithms, as Rust is faster and more efficient and Python was taking too long. Both implementations are available in my GitHub repository.
         \item Python was used to produce the graphs, LaTeX for the write-up.
-        \item A risk assessment was conducted before the experiment, and no risks were identified. Safe computer practices were followed.
+        \item A risk assessment was conducted before the experiment, and no serious risks were identified. Safe computer practices were followed.
         \item GitHub repository: \url{https://github.com/ErikPeter2000/HowScienceWorks}
     \end{itemize}
 
